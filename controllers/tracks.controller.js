@@ -4,8 +4,9 @@ const { handleHttpError } = require("../utils/handleError");
 
 const getItems = async (req, res) => {
   try {
+    const user=req.user
     const data = await tracksModels.find({});
-    res.json({ data });
+    res.json({ user,data });
   } catch (error) {
     handleHttpError(res);
   }
