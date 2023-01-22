@@ -1,14 +1,24 @@
 const express = require("express");
 const cors = require("cors");
-const dbConnect=require("./config/mongo")
+const dbConnect = require("./config/mongo");
+const userRoutes = require("./routes/users.routes");
+const tracksRoutes = require("./routes/tracks.routes");
+const storageRoutes = require("./routes/storage.routes");
+
 require("dotenv").config();
 
-
 const app = express();
-const PORT = process.env.PORT || 3500;
+
 app.use(cors());
+app.use(express.json())
+app.use(express.static("storage"))
+
+app.use("/api/users",userRoutes);
+app.use("/api/tracks",tracksRoutes);
+app.use("/api/storage",storageRoutes);
+const PORT = process.env.PORT || 3500;
 app.listen(PORT, () => {
   console.log("el servidor se inicio en el puerto:", PORT);
 });
 
-dbConnect()
+dbConnect();
